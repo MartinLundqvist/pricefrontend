@@ -1,11 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './index.css'
-import App from './App'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import { BasketProvider } from './contexts/BasketProvider';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BasketProvider>
+      <App />
+    </BasketProvider>
   </React.StrictMode>,
   document.getElementById('root')
-)
+);

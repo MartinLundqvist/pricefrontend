@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useLocalStorage } from './hooks/useLocalStorage';
+// import { useLocalStorage } from './hooks/useLocalStorage';
 import he from 'he';
 import styled from 'styled-components';
 import { Basket } from './components/Basket';
 import { SearchResults } from './components/SearchResults';
 import { IResponse } from 'price-scraper-common';
-import { IStore } from './types';
+// import { IStore } from './types';
+import { useBasket } from './contexts/BasketProvider';
 
 const Wrapper = styled.div`
   position: relative;
@@ -21,11 +22,12 @@ function App() {
   const [product, setProduct] = useState<string>('');
   const [doSearch, setDoSearch] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState<IResponse | null>(null);
-  const [storeValues, setStoreValues] = useLocalStorage<IStore>(
-    'price-scraper-beta',
-    { products: [], vendors: [] }
-  );
-  // const [basket, setBasket] = useState<IBasket[]>([]);
+  const { clearBasket } = useBasket();
+  // const [storeValues, setStoreValues] = useLocalStorage<IStore>(
+  //   'price-scraper-beta',
+  //   { products: [], vendors: [] }
+  // );
+  // // const [basket, setBasket] = useState<IBasket[]>([]);
 
   const handleClick = () => {
     setDoSearch(true);
@@ -70,9 +72,9 @@ function App() {
   //   setStoreValues({ products, vendors });
   // };
 
-  const clearLocalStorage = () => {
-    setStoreValues({ products: [], vendors: [] });
-  };
+  // const clearLocalStorage = () => {
+  //   setStoreValues({ products: [], vendors: [] });
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -114,7 +116,7 @@ function App() {
         {searchResults && <SearchResults results={searchResults} />}
       </div>
       <div>
-        <Basket store={storeValues} clearStore={clearLocalStorage} />
+        <Basket />
       </div>
     </Wrapper>
   );
