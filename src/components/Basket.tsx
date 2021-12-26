@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
-// import { IResponse } from 'price-scraper-common';
 import styled from 'styled-components';
 import { useBasket } from '../contexts/BasketProvider';
-// import { IStore, IStoreVendor } from '../types';
 
 const Wrapper = styled.div`
   position: relative;
@@ -11,31 +8,13 @@ const Wrapper = styled.div`
   gap: 3rem;
 `;
 
-// interface IBasketStats {
-//   vendors: string[];
-//   cheapestVendor: string;
-//   minTotalPrice: string;
-// }
-
 export const Basket = (): JSX.Element => {
-  // const [filteredVendors, setFilteredVendors] = useState<IStoreVendor[]>();
   const {
     clearBasket,
     getProductsInBasket,
     getVendorsWithBasket,
     getCheapestBasketVendor,
   } = useBasket();
-
-  // useEffect(() => {
-  //   // We do this the easy way. Filter out the vendors with the full number of products
-  //   const vendorsWithAllProducts = store.vendors.filter((vendor) => {
-  //     vendor.products.length === store.products.length;
-  //   });
-
-  //   console.log(vendorsWithAllProducts);
-
-  //   setFilteredVendors(vendorsWithAllProducts);
-  // }, [store]);
 
   return (
     <div>

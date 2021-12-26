@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { BasketUtils } from '../classes/basket';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { IStore, IStoreProduct, IStoreVendor } from '../types';
 

@@ -2,6 +2,7 @@ import { IResponse } from 'price-scraper-common';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useBasket } from '../contexts/BasketProvider';
+import { useSearch } from '../contexts/SearchProvider';
 import { IStoreProduct } from '../types';
 
 const Wrapper = styled.div`
@@ -19,18 +20,15 @@ const Wrapper = styled.div`
   }
 `;
 
-interface ISearchResultsProps {
-  results: IResponse;
-}
-
-export const SearchResults = ({
-  results,
-}: ISearchResultsProps): JSX.Element => {
+export const SearchResults = (): JSX.Element => {
   const MAX_OFFER_CHARACTERS = 45;
   const [chosenProductOfferIDs, setChosenProductOfferIDs] = useState<string[]>(
     []
   );
+  const { data, clearSearch } = useSearch();
   const { addProduct } = useBasket();
+
+  if (!data) return <></>;
 
   const handleProductChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
@@ -63,7 +61,7 @@ export const SearchResults = ({
 
   const addToBasket = () => {
     const newProduct: IStoreProduct = {
-      product: results.product.product,
+      product: data.product.product,
       vendors: [],
     };
 
@@ -73,7 +71,7 @@ export const SearchResults = ({
     }
 
     chosenProductOfferIDs.forEach((id) => {
-      const vendor = results.vendors.find((v) => v.productOfferID === id);
+      const vendor = data.vendors.find((v) => v.productOfferID === id);
       if (vendor) {
         newProduct.vendors.push({
           vendor: vendor.vendor,
@@ -97,21 +95,22 @@ export const SearchResults = ({
     );
 
     setChosenProductOfferIDs([]);
+    clearSearch();
   };
 
   return (
     <Wrapper>
       <h3>
         Produkt som matchade din sökning:{' '}
-        <span style={{ color: 'blue' }}> {results.product.product}</span>
+        <span style={{ color: 'blue' }}> {data.product.product}</span>
       </h3>
       <h3>
         Erbjudanden som matchade{' '}
-        <span style={{ color: 'blue' }}>{results.product.product}</span> (visar
+        <span style={{ color: 'blue' }}>{data.product.product}</span> (visar
         max. 10 med bästa match överst):
       </h3>
       <ul>
-        {results.vendors.map((vendorResult, index) => (
+        {data.vendors.map((vendorResult, index) => (
           <label key={index + 0.6}>
             <input
               type='checkbox'
@@ -134,7 +133,7 @@ export const SearchResults = ({
         (eller gör en mer specifik sökning om inga erbjudanden matchar det du
         söker)
       </h3>
-      <button onClick={() => addToBasket()}>Lägg i Korgen!</button>
+      <button onClick={() => addToBasket()}>Lägg i Korgen</button>
     </Wrapper>
   );
 };
