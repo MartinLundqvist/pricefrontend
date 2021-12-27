@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useSearch } from '../contexts/SearchProvider';
-import Button from './Button';
-import Input from './Input';
+import { useSearch } from '../../contexts/SearchProvider';
+import Button from '../elements/Button';
+import Input from '../elements/Input';
 import { SearchResults } from './SearchResults';
 
 const Wrapper = styled.div`

@@ -1,7 +1,7 @@
-import Header from './components/Header';
-import Search from './components/Search';
+import Header from './components/elements/Header';
+import Search from './components/search/Search';
 import styled from 'styled-components';
-import { Basket } from './components/Basket';
+import { Basket } from './components/basket/Basket';
 
 const Wrapper = styled.div`
   position: relative;

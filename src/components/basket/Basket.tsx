@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { useBasket } from '../contexts/BasketProvider';
-import Button from './Button';
+import { useBasket } from '../../contexts/BasketProvider';
+import Button from '../elements/Button';
 
 const Wrapper = styled.div`
   position: relative;
