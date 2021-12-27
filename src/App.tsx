@@ -1,53 +1,26 @@
-import { useEffect, useState } from 'react';
-import he from 'he';
+import Header from './components/Header';
+import Search from './components/Search';
 import styled from 'styled-components';
 import { Basket } from './components/Basket';
-import { SearchResults } from './components/SearchResults';
-import { useSearch } from './contexts/SearchProvider';
 
 const Wrapper = styled.div`
   position: relative;
-  margin: 1rem;
-  width: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: 5rem;
+  justify-content: space-between;
+  gap: 3rem;
+  padding: 1rem var(--padding) 1rem var(--padding);
 `;
 
-function App() {
-  const { searchOffers, isLoading, isError, data, clearSearch } = useSearch();
-  const [product, setProduct] = useState<string>('');
-
-  const handleSearchClick = () => {
-    searchOffers(product);
-  };
-
-  const handleClearClick = () => {
-    clearSearch();
-    setProduct('');
-  };
-
+const App = (): JSX.Element => {
   return (
-    <Wrapper>
-      <div>
-        <h1>Sök efter en produkt</h1>
-        <input
-          type='text'
-          value={product}
-          onChange={(e) => setProduct(e.target.value)}
-        />
-        <button disabled={isLoading} onClick={() => handleSearchClick()}>
-          Sök!
-        </button>
-        <button onClick={() => handleClearClick()}>Rensa!</button>
-        <SearchResults />
-      </div>
-      <div>
+    <>
+      <Header />
+      <Wrapper>
+        <Search />
         <Basket />
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </>
   );
-}
+};
 
 export default App;

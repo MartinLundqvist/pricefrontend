@@ -4,29 +4,98 @@ import styled from 'styled-components';
 import { useBasket } from '../contexts/BasketProvider';
 import { useSearch } from '../contexts/SearchProvider';
 import { IStoreProduct } from '../types';
+import Button from './Button';
+import Select from './Select';
 
-const Wrapper = styled.div`
-  ul {
-    padding: 0;
+const SearchWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+`;
+
+const FilterWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+`;
+
+const SearchResultCard = styled.div`
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 5rem auto auto;
+  grid-template-rows: 2fr 1fr;
+  grid-template-areas:
+    'image product-offer product-offer-price'
+    'image vendor select-offer';
+  background: var(--clr-fg);
+  padding: 0.25rem 1rem 0.25rem 1rem;
+  border-radius: 5px;
+  gap: 1rem;
+
+  &:hover {
+    box-shadow: 0 0 5px hsla(0, 0%, 50%, 1);
   }
 
-  label {
-    display: block;
+  .image {
+    width: 100%;
+    height: 100%;
+    grid-area: image;
+    object-fit: cover;
+    object-position: center;
+  }
 
-    span {
-      color: blue;
-      font-weight: bold;
+  .product-offer {
+    grid-area: product-offer;
+  }
+  .product-offer-price {
+    grid-area: product-offer-price;
+    justify-self: end;
+  }
+  .vendor {
+    grid-area: vendor;
+  }
+  .select-offer {
+    position: relative;
+    grid-area: select-offer;
+    justify-self: end;
+    align-self: center;
+
+    appearance: none;
+    background-color: var(--clr-fg);
+    margin: 0 0.25em 0 0;
+    color: currentColor;
+    width: 1em;
+    height: 1em;
+    border: 1px solid currentColor;
+    border-radius: 0.15em;
+
+    &::before {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 100%;
+      background-color: var(--clr-txt);
+      transform: scale(0);
+      transition: transform 0.1s ease-in-out;
+    }
+
+    &:checked::before {
+      transform: scale(1);
     }
   }
 `;
 
 export const SearchResults = (): JSX.Element => {
-  const MAX_OFFER_CHARACTERS = 45;
+  const MAX_OFFER_CHARACTERS = 90;
   const [chosenProductOfferIDs, setChosenProductOfferIDs] = useState<string[]>(
     []
   );
-  const { data, clearSearch } = useSearch();
+  const { data, isLoading, clearSearch } = useSearch();
   const { addProduct } = useBasket();
+
+  if (isLoading) return <div>Loading...</div>;
 
   if (!data) return <></>;
 
@@ -99,41 +168,43 @@ export const SearchResults = (): JSX.Element => {
   };
 
   return (
-    <Wrapper>
-      <h3>
-        Produkt som matchade din sökning:{' '}
-        <span style={{ color: 'blue' }}> {data.product.product}</span>
-      </h3>
-      <h3>
-        Erbjudanden som matchade{' '}
-        <span style={{ color: 'blue' }}>{data.product.product}</span> (visar
-        max. 10 med bästa match överst):
-      </h3>
-      <ul>
-        {data.vendors.map((vendorResult, index) => (
-          <label key={index + 0.6}>
-            <input
-              type='checkbox'
-              key={index + 0.5}
-              name='productOfferID'
-              value={vendorResult.productOfferID}
-              checked={chosenProductOfferIDs.includes(
-                vendorResult.productOfferID
-              )}
-              onChange={(e) => handleProductChange(e)}
-            />
-            {truncate(vendorResult.productOffer)}:{' '}
-            <span>{vendorResult.priceOffer.toLocaleString()}kr</span> (
-            {vendorResult.vendor})
-          </label>
-        ))}
-      </ul>
-      <h3>
-        Markera de erbjudanden du önskar koppla till produkten du söker efter
-        (eller gör en mer specifik sökning om inga erbjudanden matchar det du
-        söker)
-      </h3>
-      <button onClick={() => addToBasket()}>Lägg i Korgen</button>
-    </Wrapper>
+    <>
+      <SearchWrapper>
+        Matching item: {data.product.product}
+        <FilterWrapper>
+          Showing{' '}
+          <Select>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={20}>30</option>
+          </Select>{' '}
+          results
+        </FilterWrapper>
+      </SearchWrapper>
+      {data.vendors.map((vendorResult, index) => (
+        <SearchResultCard key={index}>
+          <img className='image' src='https://source.unsplash.com/200x200/?' />
+          <div className='product-offer'>
+            {truncate(vendorResult.productOffer)}
+          </div>
+          <div className='product-offer-price'>
+            {vendorResult.priceOffer.toLocaleString()} kr
+          </div>
+          <div className='vendor'>{vendorResult.vendor}</div>
+          <input
+            className='select-offer'
+            type='checkbox'
+            name='productOfferID'
+            value={vendorResult.productOfferID}
+            checked={chosenProductOfferIDs.includes(
+              vendorResult.productOfferID
+            )}
+            onChange={(e) => handleProductChange(e)}
+          />
+        </SearchResultCard>
+      ))}
+      <div>Select the offers to include, or clear and make a new search</div>
+      <Button onClick={() => addToBasket()}>Add to basket</Button>
+    </>
   );
 };

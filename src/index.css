@@ -1,9 +1,25 @@
+*,
+**::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  --clr-bg: hsl(0, 0%, 90%);
+  --clr-fg: hsl(0, 0%, 100%);
+  --clr-txt: hsl(0, 0%, 0%);
+  --clr-btn-p: hsl(112, 65%, 70%);
+  --clr-btn-s: hsl(11, 65%, 70%);
+  --padding: 5rem;
+  --header-height: 5rem;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+  font-family: 'Saira', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 0.75rem;
+  color: var(--clr-txt);
+  background: var(--clr-bg);
 }

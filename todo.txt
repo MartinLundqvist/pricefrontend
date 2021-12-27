@@ -1,15 +1,13 @@
 1. Refactor the BasketContextProvider so that the Store utils are managed separately. Perhaps a class?
 1b. Also, the algorithms aren't fully battle tested...
 2. Build-out the search results to proper cards - pick a design for that
-2b. Allow user to clear the search and restart. 
-2c. Clear the search results after the offers have been added to the basket
 3. Move the Basket into a separate place. 
 4. Create a decent design for th pages
 5. Fix the issue with Pricerunner returning a different page when non-categorized results are returned
 6. Add schema validation on the API responses - probably put these in the Common workspace.
 7. Allow user to pick how many matching offers to return
 8. Remove the Alert() thingies from the front-end. 
-
+9. Get the thing ready for deployment...
 
 
 
@@ -42,19 +40,6 @@ export interface IStoreVendor {
   }[];
   totalPriceOffer: number;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 => Group results by vendor. Do that on the back-end. 
