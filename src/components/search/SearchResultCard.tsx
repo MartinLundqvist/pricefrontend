@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SearchResultCard = styled.div`
+const SearchResultCard = styled.div`
   box-sizing: border-box;
   display: grid;
   width: 100%;
@@ -66,3 +66,5 @@ export const SearchResultCard = styled.div`
     }
   }
 `;
+
+export default SearchResultCard;

@@ -28,10 +28,8 @@ export const BasketProvider = ({
     vendors: [],
   });
 
-  const clearBasket = () => {
-    if (confirm('Are you sure you want to clear the basket?')) {
-      setStore({ products: [], vendors: [] });
-    }
+  const clearBasket = async () => {
+    setStore({ products: [], vendors: [] });
   };
 
   const addProduct = (product: IStoreProduct) => {

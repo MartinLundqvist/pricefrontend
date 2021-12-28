@@ -4,7 +4,6 @@
 5. Fix the issue with Pricerunner returning a different page when non-categorized results are returned
 6. Add schema validation on the API responses - probably put these in the Common workspace.
 7. Allow user to pick how many matching offers to return
-8. Remove the Alert() thingies from the front-end. 
 9. Get the thing ready for deployment...
 
 => Need a unique product. So user has to select. 

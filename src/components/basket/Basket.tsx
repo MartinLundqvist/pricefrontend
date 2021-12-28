@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useAlert } from '../../contexts/AlertProvider';
 import { useBasket } from '../../contexts/BasketProvider';
 import Button from '../elements/Button';
 
@@ -41,6 +42,16 @@ export const Basket = (): JSX.Element => {
     getVendorsWithBasket,
     getCheapestBasketVendor,
   } = useBasket();
+
+  const { confirm } = useAlert();
+
+  const handleClearBasketClick = async () => {
+    const confirmed = await confirm(
+      'Are you sure you want to clear the basket?'
+    );
+
+    if (confirmed) clearBasket();
+  };
 
   return (
     <Wrapper>
@@ -89,7 +100,7 @@ export const Basket = (): JSX.Element => {
       </ItemsWrapper>
       <ButtonsWrapper>
         <Button>Go to vendor</Button>
-        <Button secondary onClick={() => clearBasket()}>
+        <Button secondary onClick={() => handleClearBasketClick()}>
           Empty basket
         </Button>
       </ButtonsWrapper>

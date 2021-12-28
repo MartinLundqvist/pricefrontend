@@ -1,12 +1,13 @@
 import { IResponse } from 'price-scraper-common';
+import { IStoreProduct } from '../../types';
 import { useState } from 'react';
-import styled from 'styled-components';
+import { useAlert } from '../../contexts/AlertProvider';
 import { useBasket } from '../../contexts/BasketProvider';
 import { useSearch } from '../../contexts/SearchProvider';
-import { IStoreProduct } from '../../types';
 import Button from '../elements/Button';
 import Select from '../elements/Select';
-import { SearchResultCard } from './SearchResultCard';
+import SearchResultCard from './SearchResultCard';
+import styled from 'styled-components';
 
 const SearchWrapper = styled.div`
   display: flex;
@@ -26,12 +27,15 @@ export const SearchResults = (): JSX.Element => {
   const [chosenProductOfferIDs, setChosenProductOfferIDs] = useState<string[]>(
     []
   );
-  const { data, isLoading, clearSearch } = useSearch();
+  const { data, isLoading, isError, clearSearch } = useSearch();
   const { addProduct } = useBasket();
+  const { alert } = useAlert();
 
   if (isLoading) return <div>Loading...</div>;
 
-  if (!data) return <></>;
+  if (isError) return <div>Something went wrong. Try again.</div>;
+
+  if (!data) return <div>No results to show.</div>;
 
   const handleProductChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
@@ -62,14 +66,14 @@ export const SearchResults = (): JSX.Element => {
     return offerString;
   };
 
-  const addToBasket = () => {
+  const addToBasket = async () => {
     const newProduct: IStoreProduct = {
       product: data.product.product,
       vendors: [],
     };
 
     if (chosenProductOfferIDs.length === 0) {
-      alert('You did not select any product offers to add.');
+      await alert('You did not select any product offers to add.');
       return;
     }
 
@@ -86,12 +90,12 @@ export const SearchResults = (): JSX.Element => {
     });
 
     if (newProduct.vendors.length === 0) {
-      alert('Found no product offers to add');
+      await alert('Found no product offers to add');
       return;
     }
 
     addProduct(newProduct);
-    alert(
+    await alert(
       'Added ' +
         newProduct.vendors.length +
         ' offers to the product and put in the basket.'
