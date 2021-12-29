@@ -14,6 +14,7 @@ const SearchWrapper = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
+  width: 100%;
 `;
 
 const FilterWrapper = styled.div`
@@ -28,6 +29,7 @@ export const SearchResults = (): JSX.Element => {
     []
   );
   const { data, isLoading, isError, clearSearch } = useSearch();
+  const [noOffersToShow, setNoOffersToShow] = useState(10);
   const { addProduct } = useBasket();
   const { alert } = useAlert();
 
@@ -113,15 +115,18 @@ export const SearchResults = (): JSX.Element => {
         Matching item: {data.product.product}
         <FilterWrapper>
           Showing{' '}
-          <Select>
+          <Select
+            defaultValue={10}
+            onChange={(e) => setNoOffersToShow(parseInt(e.target.value))}
+          >
             <option value={10}>10</option>
             <option value={20}>20</option>
-            <option value={20}>30</option>
+            <option value={30}>30</option>
           </Select>{' '}
           results
         </FilterWrapper>
       </SearchWrapper>
-      {data.vendors.map((vendorResult, index) => (
+      {data.vendors.slice(0, noOffersToShow).map((vendorResult, index) => (
         <SearchResultCard key={index}>
           <div className='product-offer'>
             {truncate(vendorResult.productOffer)}
