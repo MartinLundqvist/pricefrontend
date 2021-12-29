@@ -37,6 +37,8 @@ export const SearchResults = (): JSX.Element => {
 
   if (!data) return <div>No results to show.</div>;
 
+  if (data.vendors.length === 0) return <div>No matching products found.</div>;
+
   const handleProductChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
     const productOfferID = event.target.value;
@@ -121,7 +123,6 @@ export const SearchResults = (): JSX.Element => {
       </SearchWrapper>
       {data.vendors.map((vendorResult, index) => (
         <SearchResultCard key={index}>
-          <img className='image' src='https://source.unsplash.com/200x200/?' />
           <div className='product-offer'>
             {truncate(vendorResult.productOffer)}
           </div>
