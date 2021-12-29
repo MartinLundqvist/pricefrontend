@@ -1,4 +1,3 @@
-import { IResponse } from 'price-scraper-common';
 import { IStoreProduct } from '../../types';
 import { useState } from 'react';
 import { useAlert } from '../../contexts/AlertProvider';

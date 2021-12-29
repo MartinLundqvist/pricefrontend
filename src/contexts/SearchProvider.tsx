@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import he from 'he';
-import { IResponse } from 'price-scraper-common';
+import { IResponse } from '@mlundqvi/price-scraper-common';
 
 interface ISearchContext {
   searchOffers: (searchString: string) => void;

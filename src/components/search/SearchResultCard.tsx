@@ -5,7 +5,7 @@ const SearchResultCard = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: auto auto;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto auto;
   grid-template-areas:
     'product-offer product-offer-price'
     'vendor select-offer';
@@ -34,7 +34,7 @@ const SearchResultCard = styled.div`
     position: relative;
     grid-area: select-offer;
     justify-self: end;
-    align-self: center;
+    align-self: start;
 
     appearance: none;
     background-color: var(--clr-fg);
