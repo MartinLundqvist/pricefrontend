@@ -12,6 +12,7 @@ const Button = styled.button<IButtonProps>`
   border-radius: 5px;
   font-family: inherit;
   font-size: inherit;
+  color: inherit;
 
   &:hover {
     box-shadow: 0 0 5px hsla(0, 0%, 50%, 1);

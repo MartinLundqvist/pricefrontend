@@ -20,7 +20,7 @@ const CardWrapper = styled.div`
   box-shadow: 0 0 5px hsla(0, 0%, 50%, 1);
 
   &.mobile {
-    width: 50%;
+    width: 75%;
     height: 30%;
   }
 
