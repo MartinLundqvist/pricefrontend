@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigation } from '../../contexts/NavigationProvider';
 import { useSearch } from '../../contexts/SearchProvider';
 import Button from '../elements/Button';
 import Input from '../elements/Input';
@@ -18,11 +19,18 @@ const SearchWrapper = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
+
+  &.mobile {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
 `;
 
 const Search = (): JSX.Element => {
   const { searchOffers, isLoading, isError, data, clearSearch } = useSearch();
   const [product, setProduct] = useState<string>('');
+  const { isMobile } = useNavigation();
 
   const handleSearchClick = () => {
     searchOffers(product);
@@ -35,7 +43,7 @@ const Search = (): JSX.Element => {
 
   return (
     <Wrapper>
-      <SearchWrapper>
+      <SearchWrapper className={isMobile ? 'mobile' : ''}>
         Search for offers
         <Input
           type='text'

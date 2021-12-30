@@ -1,4 +1,8 @@
 import styled from 'styled-components';
+import { mobile } from '../elements/Mixins';
+import BasketButton from './BasketButton';
+import { useNavigation } from '../../contexts/NavigationProvider';
+import SearchButton from './SearchButton';
 
 const Wrapper = styled.div`
   position: relative;
@@ -8,13 +12,24 @@ const Wrapper = styled.div`
   border-radius: 0 0 10px 10px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   font-size: 1.25rem;
   font-weight: 500;
+
+  &.mobile {
+    padding: 0 var(--padding-mobile) 0 var(--padding-mobile);
+  }
 `;
 
 const Header = (): JSX.Element => {
-  return <Wrapper>Price Scraper</Wrapper>;
+  const { isMobile, activePage } = useNavigation();
+  return (
+    <Wrapper className={isMobile ? 'mobile' : ''}>
+      Price Scraper
+      {isMobile && activePage === 'search' && <BasketButton />}
+      {isMobile && activePage === 'basket' && <SearchButton />}
+    </Wrapper>
+  );
 };
 
 export default Header;

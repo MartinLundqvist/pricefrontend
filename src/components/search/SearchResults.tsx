@@ -7,6 +7,7 @@ import Button from '../elements/Button';
 import Select from '../elements/Select';
 import SearchResultCard from './SearchResultCard';
 import styled from 'styled-components';
+import { useNavigation } from '../../contexts/NavigationProvider';
 
 const SearchWrapper = styled.div`
   display: flex;
@@ -14,12 +15,22 @@ const SearchWrapper = styled.div`
   align-items: flex-start;
   gap: 1rem;
   width: 100%;
+
+  &.mobile {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
 `;
 
 const FilterWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 1rem;
+
+  &.mobile {
+    justify-content: flex-end;
+  }
 `;
 
 export const SearchResults = (): JSX.Element => {
@@ -31,6 +42,7 @@ export const SearchResults = (): JSX.Element => {
   const [noOffersToShow, setNoOffersToShow] = useState(10);
   const { addProduct } = useBasket();
   const { alert } = useAlert();
+  const { isMobile } = useNavigation();
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -110,9 +122,9 @@ export const SearchResults = (): JSX.Element => {
 
   return (
     <>
-      <SearchWrapper>
+      <SearchWrapper className={isMobile ? 'mobile' : ''}>
         Matching item: {data.product.product}
-        <FilterWrapper>
+        <FilterWrapper className={isMobile ? 'mobile' : ''}>
           Showing{' '}
           <Select
             defaultValue={10}

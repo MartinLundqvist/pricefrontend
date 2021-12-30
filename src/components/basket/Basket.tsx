@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useAlert } from '../../contexts/AlertProvider';
 import { useBasket } from '../../contexts/BasketProvider';
+import { useNavigation } from '../../contexts/NavigationProvider';
 import Button from '../elements/Button';
 
 const Wrapper = styled.div`
@@ -33,9 +34,13 @@ const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   gap: 1rem;
+
+  &.mobile {
+    justify-content: space-between;
+  }
 `;
 
-export const Basket = (): JSX.Element => {
+const Basket = (): JSX.Element => {
   const {
     clearBasket,
     getProductsInBasket,
@@ -44,6 +49,7 @@ export const Basket = (): JSX.Element => {
   } = useBasket();
 
   const { confirm } = useAlert();
+  const { isMobile } = useNavigation();
 
   const handleClearBasketClick = async () => {
     const confirmed = await confirm(
@@ -57,7 +63,9 @@ export const Basket = (): JSX.Element => {
     <Wrapper>
       <ItemsWrapper>
         <Item headline>
-          <div>Items in basket</div>
+          <div>
+            {getProductsInBasket().length.toLocaleString()} items in basket
+          </div>
           <div>Best offer</div>
         </Item>
         {getProductsInBasket().map((product) => (
@@ -69,7 +77,9 @@ export const Basket = (): JSX.Element => {
       </ItemsWrapper>
       <ItemsWrapper>
         <Item headline>
-          <div>Vendors offering all items</div>
+          <div>
+            {getVendorsWithBasket().length.toLocaleString()} offering all items
+          </div>
           <div>Total price</div>
         </Item>
         {getVendorsWithBasket().map((vendor) => (
@@ -98,7 +108,7 @@ export const Basket = (): JSX.Element => {
           </div>
         </Item>
       </ItemsWrapper>
-      <ButtonsWrapper>
+      <ButtonsWrapper className={isMobile ? 'mobile' : ''}>
         <Button>Go to vendor</Button>
         <Button secondary onClick={() => handleClearBasketClick()}>
           Empty basket
@@ -107,3 +117,5 @@ export const Basket = (): JSX.Element => {
     </Wrapper>
   );
 };
+
+export default Basket;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigation } from '../../contexts/NavigationProvider';
 import Button from './Button';
 
 const Wrapper = styled.div`
@@ -17,6 +18,11 @@ const CardWrapper = styled.div`
   background: var(--clr-fg);
   border-radius: 5px;
   box-shadow: 0 0 5px hsla(0, 0%, 50%, 1);
+
+  &.mobile {
+    width: 50%;
+    height: 30%;
+  }
 
   .header {
     position: relative;
@@ -53,6 +59,7 @@ const AlertCard = ({
   setIsConfirmed,
   setIsClosed,
 }: IAlertCardProps): JSX.Element => {
+  const { isMobile } = useNavigation();
   const handleOk = () => {
     setIsClosed(true);
     setIsConfirmed(true);
@@ -60,8 +67,8 @@ const AlertCard = ({
 
   return (
     <Wrapper>
-      <CardWrapper>
-        <div className='header'>Confirm</div>
+      <CardWrapper className={isMobile ? 'mobile' : ''}>
+        <div className='header'>Information</div>
         <div className='message'>{message}</div>
         <div className='buttons'>
           <Button onClick={() => handleOk()}>OK</Button>

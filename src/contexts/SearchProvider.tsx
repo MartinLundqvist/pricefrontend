@@ -24,6 +24,8 @@ const SearchProvider = ({ children }: ISearchProviderProps): JSX.Element => {
   const [data, setData] = useState<IResponse | null>(null);
   const [product, setProduct] = useState('');
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const searchOffers = (searchString: string) => {
     if (searchString.length === 0) return;
     setProduct(he.encode(searchString));
@@ -39,7 +41,7 @@ const SearchProvider = ({ children }: ISearchProviderProps): JSX.Element => {
       try {
         setIsLoading(true);
         setIsError(false);
-        const results = await fetch('http://localhost:4000/find/' + product);
+        const results = await fetch(apiUrl + 'find/' + product);
 
         if (results.ok) {
           const data: IResponse = await results.json();

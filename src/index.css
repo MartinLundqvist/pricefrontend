@@ -11,6 +11,7 @@
   --clr-btn-p: hsl(112, 65%, 70%);
   --clr-btn-s: hsl(11, 65%, 70%);
   --padding: 5rem;
+  --padding-mobile: 2rem;
   --header-height: 5rem;
 }
 
