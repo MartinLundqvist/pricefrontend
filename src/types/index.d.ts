@@ -1,4 +1,4 @@
-import { IVendorSearchResult } from 'price-scraper-common';
+import { IVendorSearchResult } from '@mlundqvi/price-scraper-common';
 
 /**
  * product: Refers to the product which matched the users search string.
