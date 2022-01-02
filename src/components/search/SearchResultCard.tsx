@@ -48,10 +48,11 @@ const SearchResultCard = styled.div`
     &::before {
       position: absolute;
       content: '';
-      width: 100%;
-      height: 100%;
+      width: 110%;
+      height: 110%;
       background-color: var(--clr-txt);
       transform: scale(0);
+      clip-path: polygon(2% 63%, 46% 99%, 100% 17%, 77% 4%, 43% 72%, 19% 40%);
       transition: transform 0.1s ease-in-out;
     }
 
