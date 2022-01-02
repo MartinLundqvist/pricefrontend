@@ -4,6 +4,7 @@ const Select = styled.select`
   border: none;
   border-radius: 5px;
   font: inherit;
+  color: inherit;
   padding: 0.1rem 0.25rem 0.1rem 0.25rem;
 
   &:focus-visible {
